@@ -60,6 +60,14 @@ function notifyCustomer(id) {
   window.open(whatsappURL, '_blank');
 }
 
+function slideOrders(direction) {
+  const container = document.getElementById("ordersList");
+  container.scrollBy({
+    left: direction * 380,
+    behavior: "smooth"
+  });
+}
+
 function renderOrders() {
   const search = document.getElementById("search")?.value.toLowerCase() || "";
 
