@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Food Corner • Smart Order Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="background-glow glow-1"></div>
+  <div class="background-glow glow-2"></div>
+
+  <div class="dashboard">
+
+    <header class="hero-section">
+      <div>
+        <p class="tag">THE FOOD CORNER • ORDER MANAGEMENT</p>
+        <h1>Premium Smart Kitchen Dashboard</h1>
+        <p class="hero-text">
+          Add customer orders, notify them instantly on WhatsApp and manage all pending and ready orders beautifully from one screen.
+        </p>
+      </div>
+
+      <div class="hero-stats">
+        <div class="glass-card mini-card">
+          <span>Total Pending</span>
+          <h2 id="pendingCount">0</h2>
+        </div>
+
+        <div class="glass-card mini-card ready-box">
+          <span>Ready To Serve</span>
+          <h2 id="readyCount">0</h2>
+        </div>
+      </div>
+    </header>
+
+    <section class="glass-card order-panel">
+      <div class="section-title-row">
+        <div>
+          <p class="small-heading">NEW ORDER</p>
+          <h2>Add Customer Order</h2>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="input-group">
+          <label>Customer Name</label>
+          <input type="text" id="customerName" placeholder="Enter customer name">
+        </div>
+
+        <div class="input-group">
+          <label>Mobile Number</label>
+          <input type="tel" id="customerPhone" placeholder="Enter WhatsApp number">
+        </div>
+
+        <div class="input-group full-width">
+          <label>Order Details</label>
+          <input type="text" id="orderItem" placeholder="Example: 2 Sandwich + 1 Coffee">
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="primary-btn" onclick="addOrder()">
+          + Create Order
+        </button>
+      </div>
+    </section>
+
+    <section class="glass-card search-panel">
+      <div class="section-title-row">
+        <div>
+          <p class="small-heading">LIVE ORDERS</p>
+          <h2>Track & Notify Customers</h2>
+        </div>
+
+        <div class="search-box">
+          <input type="text" id="search" placeholder="Search by customer or number" onkeyup="renderOrders()">
+        </div>
+      </div>
+
+      <div id="ordersList" class="orders-grid"></div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+          </html>
