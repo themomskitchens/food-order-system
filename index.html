@@ -231,11 +231,33 @@
     }
 
     .orders {
-      display: grid;
+      display: flex;
       gap: 18px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 10px;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0,191,255,.45) transparent;
+    }
+
+    .orders::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .orders::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .orders::-webkit-scrollbar-thumb {
+      background: rgba(0,191,255,.45);
+      border-radius: 999px;
     }
 
     .order-card {
+      min-width: 380px;
+      max-width: 380px;
+      flex-shrink: 0;
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.08);
       border-radius: 24px;
@@ -337,6 +359,17 @@
       .grid {
         grid-template-columns: 1fr;
       }
+
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .order-card {
+        min-width: 88vw;
+        max-width: 88vw;
+      }
+    }
 
       .hero {
         flex-direction: column;
