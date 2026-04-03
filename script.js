@@ -1,5 +1,3 @@
-const SHEET_URL = "PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE";
-
 let orders = JSON.parse(localStorage.getItem("orders")) || [];
 
 function addOrder() {
@@ -25,11 +23,6 @@ function addOrder() {
   orders.unshift(order);
   saveOrders();
 
-  fetch(SHEET_URL, {
-  method: 'POST',
-  body: JSON.stringify(order)
-});
-  
   document.getElementById("customerName").value = "";
   document.getElementById("customerPhone").value = "";
   document.getElementById("orderItem").value = "";
@@ -48,21 +41,8 @@ function markReady(id) {
 
 function markCompleted(id) {
   const order = orders.find(o => o.id === id);
-
-  const feedback = prompt(
-    `Customer feedback for ${order.name}?
-Example: Very Good / Tasty / Need Improvement`
-  );
-
   order.status = "Completed";
-  order.feedback = feedback || "No Feedback";
-
   saveOrders();
-
-  fetch(SHEET_URL, {
-    method: 'POST',
-    body: JSON.stringify(order)
-  });
 }
 
 function notifyCustomer(id) {
@@ -80,8 +60,7 @@ function notifyCustomer(id) {
   window.open(whatsappURL, '_blank');
 }
 
-function slideOrd
-  ers(direction) {
+function slideOrders(direction) {
   const container = document.getElementById("ordersList");
   container.scrollBy({
     left: direction * 380,
@@ -141,5 +120,3 @@ function renderOrders() {
 }
 
 renderOrders();
-${order.feedback ? `<p><strong>Feedback:</strong> ${order.feedback}</p>` : ''}
-    }
