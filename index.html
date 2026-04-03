@@ -17,6 +17,11 @@
   <div class="dashboard">
 
     <header class="hero-section">
+      <div class="glass-card mini-card earnings-box">
+  <span>Today's Orders</span>
+  <h2 id="todayOrders">0</h2>
+      </div>
+      
       <div>
         <p class="tag">THE Mom's Kitchen• ORDER MANAGEMENT</p>
         <h1>Premium Smart Kitchen Dashboard</h1>
@@ -64,10 +69,17 @@
       </div>
 
       <div class="action-row">
-        <button class="primary-btn" onclick="addOrder()">
-          + Create Order
-        </button>
-      </div>
+  <button class="primary-btn" onclick="addOrder()">+ Create Order</button>
+
+  <button class="secondary-btn" onclick="exportCSV()">
+    Export CSV
+  </button>
+
+  <button class="danger-btn" onclick="clearCompleted()">
+    Clear Completed
+  </button>
+</div>
+      
     </section>
 
     <section class="glass-card search-panel">
