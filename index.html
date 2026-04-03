@@ -1,92 +1,527 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Food Corner • Smart Order Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Food Corner • Premium Order Dashboard</title>  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(0,180,255,.18), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(0,120,255,.12), transparent 35%),
+        linear-gradient(135deg, #07111f, #0d1c31 45%, #12284a);
+      color: #fff;
+      padding: 30px;
+      overflow-x: hidden;
+    }
+
+    .glow {
+      position: fixed;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      opacity: .35;
+    }
+
+    .glow.one {
+      top: -120px;
+      left: -80px;
+      background: #00bfff;
+    }
+
+    .glow.two {
+      bottom: -140px;
+      right: -80px;
+      background: #4c6fff;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .hero-left {
+      max-width: 760px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: #7fd7ff;
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(14px);
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.08;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .hero p {
+      color: rgba(255,255,255,0.72);
+      line-height: 1.7;
+      font-size: 15px;
+      max-width: 640px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 28px;
+      backdrop-filter: blur(22px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+    }
+
+    .stat-card {
+      min-width: 180px;
+      padding: 24px;
+    }
+
+    .stat-card span {
+      display: block;
+      color: rgba(255,255,255,.65);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .stat-card h2 {
+      font-size: 42px;
+      color: #fff;
+    }
+
+    .pending h2 {
+      color: #ffb347;
+    }
+
+    .ready h2 {
+      color: #69ffb0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 24px;
+    }
+
+    .panel {
+      padding: 28px;
+    }
+
+    .panel h3 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .panel .sub {
+      color: rgba(255,255,255,.6);
+      font-size: 14px;
+      margin-bottom: 26px;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,.75);
+    }
+
+    .input-group input,
+    .input-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 16px 18px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: .25s ease;
+    }
+
+    .input-group textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .input-group input:focus,
+    .input-group textarea:focus {
+      border-color: rgba(0,191,255,.7);
+      box-shadow: 0 0 0 4px rgba(0,191,255,.15);
+    }
+
+    .input-group input::placeholder,
+    .input-group textarea::placeholder {
+      color: rgba(255,255,255,.35);
+    }
+
+    .btn {
+      border: none;
+      width: 100%;
+      padding: 18px;
+      border-radius: 18px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00bfff, #4c6fff);
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(0,140,255,.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(0,140,255,.45);
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .search {
+      width: 320px;
+      max-width: 100%;
+    }
+
+    .orders {
+      display: grid;
+      gap: 18px;
+    }
+
+    .order-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      padding: 22px;
+      transition: .25s ease;
+    }
+
+    .order-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,191,255,.25);
+    }
+
+    .order-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .order-head h4 {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .order-id {
+      color: #7fd7ff;
+      font-size: 13px;
+    }
+
+    .status {
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      height: fit-content;
+    }
+
+    .status.pending {
+      background: rgba(255,179,71,.14);
+      color: #ffb347;
+      border: 1px solid rgba(255,179,71,.35);
+    }
+
+    .status.ready {
+      background: rgba(105,255,176,.12);
+      color: #69ffb0;
+      border: 1px solid rgba(105,255,176,.28);
+    }
+
+    .order-info {
+      display: grid;
+      gap: 10px;
+      color: rgba(255,255,255,.75);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .small-btn {
+      flex: 1;
+      min-width: 150px;
+      border: none;
+      padding: 14px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 600;
+      color: white;
+      transition: .2s ease;
+    }
+
+    .ready-btn {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+    }
+
+    .whatsapp-btn {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+    }
+
+    .small-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .empty {
+      text-align: center;
+      padding: 70px 20px;
+      color: rgba(255,255,255,.45);
+      border: 1px dashed rgba(255,255,255,.12);
+      border-radius: 22px;
+    }
+
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style></head>
 <body>
-
-  <div class="background-glow glow-1"></div>
-  <div class="background-glow glow-2"></div>
-
-  <div class="dashboard">
-
-    <header class="hero-section">
-      <div>
-        <p class="tag">THE FOOD CORNER • ORDER MANAGEMENT</p>
-        <h1>Premium Smart Kitchen Dashboard</h1>
-        <p class="hero-text">
-          Add customer orders, notify them instantly on WhatsApp and manage all pending and ready orders beautifully from one screen.
-        </p>
-      </div>
-
-      <div class="hero-stats">
-        <div class="glass-card mini-card">
-          <span>Total Pending</span>
-          <h2 id="pendingCount">0</h2>
-        </div>
-
-        <div class="glass-card mini-card ready-box">
-          <span>Ready To Serve</span>
-          <h2 id="readyCount">0</h2>
-        </div>
-      </div>
-    </header>
-
-    <section class="glass-card order-panel">
-      <div class="section-title-row">
-        <div>
-          <p class="small-heading">NEW ORDER</p>
-          <h2>Add Customer Order</h2>
-        </div>
-      </div>
-
-      <div class="form-grid">
-        <div class="input-group">
-          <label>Customer Name</label>
-          <input type="text" id="customerName" placeholder="Enter customer name">
-        </div>
-
-        <div class="input-group">
-          <label>Mobile Number</label>
-          <input type="tel" id="customerPhone" placeholder="Enter WhatsApp number">
-        </div>
-
-        <div class="input-group full-width">
-          <label>Order Details</label>
-          <input type="text" id="orderItem" placeholder="Example: 2 Sandwich + 1 Coffee">
-        </div>
-      </div>
-
-      <div class="action-row">
-        <button class="primary-btn" onclick="addOrder()">
-          + Create Order
-        </button>
-      </div>
-    </section>
-
-    <section class="glass-card search-panel">
-      <div class="section-title-row">
-        <div>
-          <p class="small-heading">LIVE ORDERS</p>
-          <h2>Track & Notify Customers</h2>
-        </div>
-
-        <div class="search-box">
-          <input type="text" id="search" placeholder="Search by customer or number" onkeyup="renderOrders()">
-        </div>
-      </div>
-
-      <div id="ordersList" class="orders-grid"></div>
-    </section>
-
+  <div class="glow one"></div>
+  <div class="glow two"></div>  <div class="container"><div class="hero">
+  <div class="hero-left">
+    <div class="badge">THE FOOD CORNER • PREMIUM DASHBOARD</div>
+    <h1>Manage Orders Beautifully & Notify Customers Instantly</h1>
+    <p>
+      Create orders, track pending requests, mark them ready and instantly open WhatsApp notification links for customers from one premium dashboard.
+    </p>
   </div>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <div class="stats">
+    <div class="card stat-card pending">
+      <span>Total Pending</span>
+      <h2 id="pendingCount">0</h2>
+    </div>
+
+    <div class="card stat-card ready">
+      <span>Ready To Serve</span>
+      <h2 id="readyCount">0</h2>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card panel">
+    <h3>Create New Order</h3>
+    <p class="sub">Customer se sirf naam lo. Mobile number tum ya staff fill karega.</p>
+
+    <div class="input-group">
+      <label>Customer Name</label>
+      <input type="text" id="customerName" placeholder="Enter customer name">
+    </div>
+
+    <div class="input-group">
+      <label>WhatsApp Number</label>
+      <input type="tel" id="customerPhone" placeholder="Enter mobile number">
+    </div>
+
+    <div class="input-group">
+      <label>Order Details</label>
+      <textarea id="orderItem" placeholder="Example:
+
+2 Double Masala Maggie 1 Tea 3 Cigarette"></textarea> </div>
+
+<button class="btn btn-primary" onclick="addOrder()">+ Create Premium Order</button>
+  </div>
+
+  <div class="card panel">
+    <div class="top-row">
+      <div>
+        <h3>Live Orders</h3>
+        <p class="sub" style="margin:6px 0 0;">Search and manage all customer orders.</p>
+      </div>
+
+      <div class="input-group search" style="margin:0;">
+        <input type="text" id="search" placeholder="Search by name or number" onkeyup="renderOrders()">
+      </div>
+    </div>
+
+    <div id="ordersList" class="orders"></div>
+  </div>
+</div>
+
+  </div>  <script>
+    let orders = [];
+
+    function addOrder() {
+      const name = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('customerPhone').value.trim();
+      const item = document.getElementById('orderItem').value.trim();
+
+      if (!name || !phone || !item) {
+        alert('Please fill customer name, mobile number and order details.');
+        return;
+      }
+
+      const order = {
+        id: 'ORD' + Date.now().toString().slice(-5),
+        name,
+        phone,
+        item,
+        status: 'Pending',
+        time: new Date().toLocaleString()
+      };
+
+      orders.unshift(order);
+
+      document.getElementById('customerName').value = '';
+      document.getElementById('customerPhone').value = '';
+      document.getElementById('orderItem').value = '';
+
+      renderOrders();
+
+      // Future Google Sheet Integration
+      // fetch('YOUR_APPS_SCRIPT_URL', {
+      //   method: 'POST',
+      //   body: JSON.stringify(order)
+      // })
+    }
+
+    function renderOrders() {
+      const search = document.getElementById('search').value.toLowerCase();
+      const ordersList = document.getElementById('ordersList');
+
+      const filtered = orders.filter(order =>
+        order.name.toLowerCase().includes(search) ||
+        order.phone.includes(search)
+      );
+
+      document.getElementById('pendingCount').textContent = orders.filter(o => o.status === 'Pending').length;
+      document.getElementById('readyCount').textContent = orders.filter(o => o.status === 'Ready').length;
+
+      if (!filtered.length) {
+        ordersList.innerHTML = `
+          <div class="empty">
+            No orders found yet.<br><br>
+            Create your first order to see it here.
+          </div>
+        `;
+        return;
+      }
+
+      ordersList.innerHTML = filtered.map(order => `
+        <div class="order-card">
+          <div class="order-head">
+            <div>
+              <div class="order-id">#${order.id}</div>
+              <h4>${order.name}</h4>
+            </div>
+
+            <div class="status ${order.status.toLowerCase()}">${order.status}</div>
+          </div>
+
+          <div class="order-info">
+            <div><strong>Phone:</strong> ${order.phone}</div>
+            <div><strong>Order:</strong><br>${order.item.replace(/\n/g, '<br>')}</div>
+            <div><strong>Created:</strong> ${order.time}</div>
+          </div>
+
+          <div class="actions">
+            ${order.status === 'Pending' ? `
+              <button class="small-btn ready-btn" onclick="markReady('${order.id}')">
+                Mark Ready
+              </button>
+            ` : ''}
+
+            <button class="small-btn whatsapp-btn" onclick="sendWhatsApp('${order.id}')">
+              WhatsApp Customer
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function markReady(id) {
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+
+      order.status = 'Ready';
+      renderOrders();
+
+      // Future Google Sheet status update
+      // fetch('YOUR_APPS_SCRIPT_URL', {
+      //   method: 'POST',
+      //   body: JSON.stringify({ action: 'ready', id })
+      // })
+    }
+
+    function sendWhatsApp(id) {
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+
+      const message = `Hello ${order.name},%0A%0AYour order ${order.id} is ${order.status === 'Ready' ? 'ready and waiting for you' : 'currently being prepared'} at The Food Corner.%0A%0AOrder Details:%0A${encodeURIComponent(order.item)}%0A%0AThank you!`;
+
+      window.open(`https://wa.me/91${order.phone}?text=${message}`, '_blank');
+    }
+
+    renderOrders();
+  </script></body>
+  </html>
